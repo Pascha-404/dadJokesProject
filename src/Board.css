@@ -1,0 +1,24 @@
+.Board {
+    width: 80%;
+    height: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Board-left{
+    background-color: red;
+    width: 30%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Board-right{
+    width: 70%;
+    height: 95%;
+    background-color: blue;
+    overflow-y: scroll;
+}
