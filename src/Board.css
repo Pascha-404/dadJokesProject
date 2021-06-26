@@ -1,3 +1,7 @@
+::-webkit-scrollbar{
+    display:none;
+}
+
 .Board {
     width: 80%;
     height: 60%;
@@ -7,18 +11,31 @@
 }
 
 .Board-left{
-    background-color: red;
+    background-color: #A082D1;
     width: 30%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    color: #fff;
+}
+
+.Board-bigIcon{
+    font-size: 10rem;
+    color: rgb(94, 45, 11);
+    margin: 1.5rem auto 2rem;
+}
+
+.Board-newBtn{
+    padding: 0.8rem 1.8rem;
+    font-size: 1.125rem;
 }
 
 .Board-right{
     width: 70%;
     height: 95%;
-    background-color: blue;
+    background-color: #fff;
     overflow-y: scroll;
+    
 }
