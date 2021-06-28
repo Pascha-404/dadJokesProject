@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './Board.css';
+import Joke from "./Joke"
 const API_URL = 'https://icanhazdadjoke.com/';
 
 class Board extends Component {
@@ -16,6 +17,7 @@ class Board extends Component {
 		function checkDuplicate(id) {
 			const fetchedJokes = Object.values(jokes);
 			const checkJokes = fetchedJokes.includes(id);
+			console.log(checkJokes)
 			return checkJokes;
 		}
 		for (let i = 10; i > 0; i -= 1) {
@@ -66,7 +68,7 @@ class Board extends Component {
 					</button>
 				</div>
 				<div className='Board-right'>
-					<h2>Here comes the jokes</h2>
+					<ul>{this.state.jokes.map(j => (<Joke text={j.joke} key={j.id} id={j.id}/>))}</ul>
 				</div>
 			</div>
 		);
