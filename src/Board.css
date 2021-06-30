@@ -39,3 +39,8 @@
     overflow-y: scroll;
     
 }
+
+.Board-jokeList{
+    padding: 1rem;
+    margin: 0;
+}
