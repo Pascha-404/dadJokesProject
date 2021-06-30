@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './Board.css';
-import Joke from "./Joke"
+import Joke from './Joke';
 const API_URL = 'https://icanhazdadjoke.com/';
 
 class Board extends Component {
@@ -11,28 +11,31 @@ class Board extends Component {
 		this.state = { jokes: [] };
 	}
 
+	storeAndRerender(array) {
+		localStorage.setItem('dadJokes', JSON.stringify(array));
+		this.setState(st => ({ jokes: this.getJokes() }));
+	}
+
 	async getNewJokes(evt) {
 		const options = { headers: { Accept: 'application/json' } };
-		let jokes = JSON.parse(localStorage.getItem('dadJokes'));
-		function checkDuplicate(id) {
-			const fetchedJokes = Object.values(jokes);
-			const checkJokes = fetchedJokes.includes(id);
-			console.log(checkJokes)
-			return checkJokes;
-		}
+		let jokes = JSON.parse(localStorage.dadJokes);
+
 		for (let i = 10; i > 0; i -= 1) {
 			const response = await axios.get(`${API_URL}`, options);
-			const data = response.data;
-			if (!checkDuplicate(data.id)) {
+			const data = { ...response.data, rating: 0 };
+			let jokeExists = 0;
+			for (let j = 0; j < jokes.length; j += 1) {
+				if (jokes[j].id === data.id) {
+					jokeExists += 1;
+				}
+			}
+			if (jokeExists > 0) {
+				i += 1;
+			} else {
 				jokes.push(data);
-            } else {
-                i += 1;
-                console.log("added one")
-            }
-            console.log(i)
+			}
 		}
-		localStorage.setItem('dadJokes', JSON.stringify(jokes));
-		this.setState(st => ({ jokes: this.getJokes() }));
+		this.storeAndRerender(jokes);
 	}
 
 	getJokes(evt) {
@@ -40,17 +43,29 @@ class Board extends Component {
 			localStorage.setItem('dadJokes', '[]');
 			this.getNewJokes();
 		}
-		const storage = JSON.parse(localStorage.getItem('dadJokes'));
-		console.log(storage);
+		const storage = JSON.parse(localStorage.dadJokes);
 		return storage;
 	}
 
-	// checkStorage(id) {
-	// 	const storage = JSON.parse(localStorage.get('dadJokes'));
-	// }
+	changeRating(id, term) {
+		let storage = JSON.parse(localStorage.dadJokes);
+		for (let i = 0; i < storage.length; i += 1) {
+			if (storage[i].id === id) {
+				if (term === 'add') {
+					storage[i].rating += 1;
+				} else {
+					storage[i].rating -= 1;
+				}
+				console.log(storage[i])
+				console.log(storage)
+			}
+		}
+		this.storeAndRerender(storage);
+	}
 
 	handleClick(evt) {
 		this.getNewJokes();
+		this.changeRating('PZgyPmjb2ob', 'add');
 	}
 
 	componentDidMount() {
@@ -68,7 +83,11 @@ class Board extends Component {
 					</button>
 				</div>
 				<div className='Board-right'>
-					<ul>{this.state.jokes.map(j => (<Joke text={j.joke} key={j.id} id={j.id}/>))}</ul>
+					<ul className='Board-jokeList'>
+						{this.state.jokes.map(j => (
+							<Joke text={j.joke} key={j.id} id={j.id} rating={j.rating} />
+						))}
+					</ul>
 				</div>
 			</div>
 		);
