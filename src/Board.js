@@ -9,6 +9,7 @@ class Board extends Component {
 		super(props);
 		this.handleClick = this.handleClick.bind(this);
 		this.state = { jokes: [] };
+		this.changeRating = this.changeRating.bind(this);
 	}
 
 	storeAndRerender(array) {
@@ -44,20 +45,19 @@ class Board extends Component {
 			this.getNewJokes();
 		}
 		const storage = JSON.parse(localStorage.dadJokes);
+		storage.sort((a,b) => b.rating - a.rating)
 		return storage;
 	}
 
-	changeRating(id, term) {
+	changeRating(id, count) {
 		let storage = JSON.parse(localStorage.dadJokes);
 		for (let i = 0; i < storage.length; i += 1) {
 			if (storage[i].id === id) {
-				if (term === 'add') {
-					storage[i].rating += 1;
+				if (count === +1 ) {
+					storage[i].rating = storage[i].rating + 1;
 				} else {
-					storage[i].rating -= 1;
+					storage[i].rating = storage[i].rating - 1;
 				}
-				console.log(storage[i])
-				console.log(storage)
 			}
 		}
 		this.storeAndRerender(storage);
@@ -65,7 +65,6 @@ class Board extends Component {
 
 	handleClick(evt) {
 		this.getNewJokes();
-		this.changeRating('PZgyPmjb2ob', 'add');
 	}
 
 	componentDidMount() {
@@ -85,7 +84,7 @@ class Board extends Component {
 				<div className='Board-right'>
 					<ul className='Board-jokeList'>
 						{this.state.jokes.map(j => (
-							<Joke text={j.joke} key={j.id} id={j.id} rating={j.rating} />
+							<Joke text={j.joke} key={j.id} id={j.id} rating={j.rating} changeRating={this.changeRating}/>
 						))}
 					</ul>
 				</div>
