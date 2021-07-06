@@ -5,11 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* background-image: url(".//gradient-bg.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover; */
-  background: center/cover no-repeat url(".//gradient-bg.png");
+  background: rgb(39,255,249);
+  background: linear-gradient(135deg, rgb(179, 230, 252) 50%, rgb(239, 99, 145) 50%);
 }
 
 code {
