@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './Board.css';
 import Joke from './Joke';
+import dad from "./dad.png"
 const API_URL = 'https://icanhazdadjoke.com/';
 
 class Board extends Component {
@@ -89,8 +90,8 @@ class Board extends Component {
 		return (
 			<div className='Board'>
 				<div className='Board-left'>
-					<h1>Dad Jokes</h1>
-					<i className='fas fa-poo Board-bigIcon'></i>
+					<h1 className="Board-title">Dad <span className="calli-font">Jokes</span></h1>
+					<img className="Board-bigIcon"src={dad} alt="" />
 					<button className='Board-newBtn' onClick={this.handleClick}>
 						New Jokes
 					</button>

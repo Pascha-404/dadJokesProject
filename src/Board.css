@@ -2,6 +2,11 @@
 	display: none;
 }
 
+.calli-font {
+	font-family: 'Calligraffitti', cursive;
+	margin-left: 1rem;
+}
+
 .Board {
 	width: 90%;
 	height: 70%;
@@ -10,8 +15,13 @@
 	justify-content: center;
 }
 
+.Board-left,
+.Board-right {
+	box-shadow: 3px 4px 4px 3px rgba(0, 0, 0, 0.4);
+}
+
 .Board-left {
-	background-color: #a082d1;
+	background-color: rgb(150, 118, 205);
 	width: 30%;
 	height: 100%;
 	display: flex;
@@ -21,15 +31,34 @@
 	color: #fff;
 }
 
+.Board-title {
+	font-weight: 800;
+}
+
 .Board-bigIcon {
-	font-size: 10rem;
-	color: rgb(94, 45, 11);
 	margin: 1.5rem auto 2rem;
+	max-width: 10rem;
+	border: 6px solid rgb(65, 50, 90);
+	border-radius: 50%;
+	padding: 0rem;
+	box-sizing: border-box;
+	box-shadow: 2px 5px 5px 3px rgba(0, 0, 0, 0.4);
+}
+
+.Board-bigIcon:hover {
+	animation: laugh 800ms linear 10;
 }
 
 .Board-newBtn {
 	padding: 0.8rem 1.8rem;
 	font-size: 1.125rem;
+	font-weight: 600;
+	border-radius: 30px;
+	background: linear-gradient(135deg, rgb(179, 230, 252) 45%, rgb(239, 99, 145) 40%);
+	color: #0c1618;
+	letter-spacing: 2px;
+	cursor: pointer;
+	box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4);
 }
 
 .Board-right {
@@ -63,5 +92,20 @@
 
 	to {
 		transform: rotate(360deg);
+	}
+}
+
+@keyframes laugh {
+	0% {
+		transform: rotate(0deg) translateY(0);
+	}
+	30% {
+		transform: rotate(5deg) translateY(5%);
+	}
+	60% {
+		transform: rotate(-5deg) translateY(-5%);
+	}
+	100% {
+		transform: rotate(0deg) translateY(0);
 	}
 }
