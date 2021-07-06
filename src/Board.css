@@ -1,46 +1,67 @@
-::-webkit-scrollbar{
-    display:none;
+::-webkit-scrollbar {
+	display: none;
 }
 
 .Board {
-    width: 90%;
-    height: 70%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+	width: 90%;
+	height: 70%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
-.Board-left{
-    background-color: #A082D1;
-    width: 30%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
+.Board-left {
+	background-color: #a082d1;
+	width: 30%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
 }
 
-.Board-bigIcon{
-    font-size: 10rem;
-    color: rgb(94, 45, 11);
-    margin: 1.5rem auto 2rem;
+.Board-bigIcon {
+	font-size: 10rem;
+	color: rgb(94, 45, 11);
+	margin: 1.5rem auto 2rem;
 }
 
-.Board-newBtn{
-    padding: 0.8rem 1.8rem;
-    font-size: 1.125rem;
+.Board-newBtn {
+	padding: 0.8rem 1.8rem;
+	font-size: 1.125rem;
 }
 
-.Board-right{
-    width: 70%;
-    height: 95%;
-    background-color: #fff;
-    overflow-y: scroll;
-    
+.Board-right {
+	width: 70%;
+	height: 95%;
+	background-color: #fff;
+	overflow-y: scroll;
 }
 
-.Board-jokeList{
-    padding: 0;
-    margin: 0;
+.Board-jokeList {
+	padding: 0;
+	margin: 0;
+}
+
+.Board-right.loading {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 4rem;
+	color: blueviolet;
+}
+
+.Board-right.loading .spinner {
+	animation: spin 1000ms linear 3;
+}
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
+	}
 }

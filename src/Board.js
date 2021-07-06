@@ -8,7 +8,7 @@ class Board extends Component {
 	constructor(props) {
 		super(props);
 		this.handleClick = this.handleClick.bind(this);
-		this.state = { jokes: [] };
+		this.state = { jokes: [], isLoading: false };
 		this.changeRating = this.changeRating.bind(this);
 	}
 
@@ -21,6 +21,7 @@ class Board extends Component {
 		const options = { headers: { Accept: 'application/json' } };
 		let jokes = JSON.parse(localStorage.dadJokes);
 
+		this.setState(st => ({ isLoading: true }));
 		for (let i = 10; i > 0; i -= 1) {
 			const response = await axios.get(`${API_URL}`, options);
 			const data = { ...response.data, rating: 0 };
@@ -37,15 +38,12 @@ class Board extends Component {
 			}
 		}
 		this.storeAndRerender(jokes);
+		this.setState(st => ({ isLoading: false }));
 	}
 
 	getJokes(evt) {
-		if (!localStorage.dadJokes) {
-			localStorage.setItem('dadJokes', '[]');
-			this.getNewJokes();
-		}
 		const storage = JSON.parse(localStorage.dadJokes);
-		storage.sort((a,b) => b.rating - a.rating)
+		storage.sort((a, b) => b.rating - a.rating);
 		return storage;
 	}
 
@@ -53,7 +51,7 @@ class Board extends Component {
 		let storage = JSON.parse(localStorage.dadJokes);
 		for (let i = 0; i < storage.length; i += 1) {
 			if (storage[i].id === id) {
-				if (count === +1 ) {
+				if (count === +1) {
 					storage[i].rating = storage[i].rating + 1;
 				} else {
 					storage[i].rating = storage[i].rating - 1;
@@ -68,10 +66,26 @@ class Board extends Component {
 	}
 
 	componentDidMount() {
+		if (!localStorage.dadJokes) {
+			localStorage.setItem('dadJokes', '[]');
+			this.getNewJokes();
+		}
 		this.setState(st => ({ jokes: this.getJokes() }));
 	}
 
 	render() {
+		const jokes = this.state.jokes.map(j => (
+			<Joke
+				text={j.joke}
+				key={j.id}
+				id={j.id}
+				rating={j.rating}
+				changeRating={this.changeRating}
+			/>
+		));
+		let boardRightClass = 'Board-right ';
+		if (this.state.isLoading) boardRightClass += 'loading';
+
 		return (
 			<div className='Board'>
 				<div className='Board-left'>
@@ -81,12 +95,13 @@ class Board extends Component {
 						New Jokes
 					</button>
 				</div>
-				<div className='Board-right'>
-					<ul className='Board-jokeList'>
-						{this.state.jokes.map(j => (
-							<Joke text={j.joke} key={j.id} id={j.id} rating={j.rating} changeRating={this.changeRating}/>
-						))}
-					</ul>
+
+				<div className={boardRightClass}>
+					{this.state.isLoading ? (
+						<div className='fas fa-circle-notch spinner'></div>
+					) : (
+						<ul className='Board-jokeList'>{jokes}</ul>
+					)}
 				</div>
 			</div>
 		);
