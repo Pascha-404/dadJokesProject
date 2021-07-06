@@ -8,6 +8,8 @@
 
 .Joke-rating {
 	display: flex;
+    justify-content: center;
+    align-items: center;
 	width: 20%;
 	margin: 0 1rem;
 }
