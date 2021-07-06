@@ -1,49 +1,57 @@
 .Joke {
-    display: flex;
-    justify-content: flex-start;
-    width: 100%;
-    font-size: 0.825rem;
-    border-bottom: 1px solid grey;
+	display: flex;
+	justify-content: flex-start;
+	width: 100%;
+	font-size: 0.825rem;
+	border-bottom: 1px solid grey;
 }
 
-.Joke-rating{
-    display: flex;
-    width: 20%;
-    margin: 0 1rem;
+.Joke-rating {
+	display: flex;
+	width: 20%;
+	margin: 0 1rem;
 }
 
-.Joke-btn{
-    background-color: transparent;
-    border: none;
-    color: grey;
-    font-size: 1.125rem;
-    cursor: pointer;
+.Joke-btn {
+	background-color: transparent;
+	border: none;
+	color: grey;
+	font-size: 1.125rem;
+	cursor: pointer;
 }
 
-.Joke-btn:active{
-    transform: scale(0.98);
+.Joke-btn:active {
+	transform: scale(0.98);
 }
 
-.Joke-score{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    border: 3px solid black;
-    border-radius: 50%;
+.Joke-score {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 2rem;
+	height: 2rem;
+	border: 3px solid black;
+	border-radius: 50%;
 }
 
-
-.Joke-text{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: left;
-    width: 100%;
+.Joke-text {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: left;
+	width: 100%;
 }
 
-.Joke-text p{
-    margin: 0;
+.Joke-text p {
+	margin: 0;
+}
+
+.Joke-face {
+	padding: 1rem;
+	font-size: 3rem;
+	display: flex !important;
+	justify-content: center;
+	align-items: center;
+	color: rgb(150, 118, 205);
 }
