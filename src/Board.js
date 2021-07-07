@@ -2,43 +2,47 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './Board.css';
 import Joke from './Joke';
-import dad from "./dad.png"
+import dad from './dad.png';
 const API_URL = 'https://icanhazdadjoke.com/';
 
 class Board extends Component {
+	static defaultProps = { jokesToFetch: 10 };
+
 	constructor(props) {
 		super(props);
 		this.handleClick = this.handleClick.bind(this);
-		this.state = { jokes: [], isLoading: false };
+		this.state = {
+			jokes: JSON.parse(localStorage.getItem('dadJokes')) || [],
+			isLoading: false,
+		};
+		this.seenJokes = new Set(this.state.jokes.map(j => j.id))
 		this.changeRating = this.changeRating.bind(this);
 	}
 
-	storeAndRerender(array) {
-		localStorage.setItem('dadJokes', JSON.stringify(array));
+	addJokesAndRender(array) {
+		const storage = JSON.parse(localStorage.getItem("dadJokes"));
+		const newStorage = [...storage, ...array];
+		localStorage.setItem('dadJokes', JSON.stringify(newStorage));
 		this.setState(st => ({ jokes: this.getJokes() }));
 	}
 
 	async getNewJokes(evt) {
 		const options = { headers: { Accept: 'application/json' } };
-		let jokes = JSON.parse(localStorage.dadJokes);
+		let jokes = [];
 
 		this.setState(st => ({ isLoading: true }));
-		for (let i = 10; i > 0; i -= 1) {
+		while (jokes.length < this.props.jokesToFetch) {
 			const response = await axios.get(`${API_URL}`, options);
 			const data = { ...response.data, rating: 0 };
-			let jokeExists = 0;
-			for (let j = 0; j < jokes.length; j += 1) {
-				if (jokes[j].id === data.id) {
-					jokeExists += 1;
-				}
-			}
-			if (jokeExists > 0) {
-				i += 1;
-			} else {
+			if (!this.seenJokes.has(data.id)) {
 				jokes.push(data);
+				this.seenJokes.add(data.id)
+			} else {
+				console.log('Joke Duplicate Found');
+				console.log(data);
 			}
 		}
-		this.storeAndRerender(jokes);
+		this.addJokesAndRender(jokes);
 		this.setState(st => ({ isLoading: false }));
 	}
 
@@ -59,7 +63,8 @@ class Board extends Component {
 				}
 			}
 		}
-		this.storeAndRerender(storage);
+		localStorage.setItem('dadJokes', JSON.stringify(storage));
+		this.setState(st => ({ jokes: this.getJokes() }));
 	}
 
 	handleClick(evt) {
@@ -90,8 +95,10 @@ class Board extends Component {
 		return (
 			<div className='Board'>
 				<div className='Board-left'>
-					<h1 className="Board-title">Dad <span className="calli-font">Jokes</span></h1>
-					<img className="Board-bigIcon"src={dad} alt="" />
+					<h1 className='Board-title'>
+						Dad <span className='calli-font'>Jokes</span>
+					</h1>
+					<img className='Board-bigIcon' src={dad} alt='' />
 					<button className='Board-newBtn' onClick={this.handleClick}>
 						New Jokes
 					</button>
@@ -101,7 +108,7 @@ class Board extends Component {
 					{this.state.isLoading ? (
 						<div className='fas fa-circle-notch spinner'></div>
 					) : (
-						<ul className='Board-jokeList'>{jokes}</ul>
+						<section className='Board-jokeList'>{jokes}</section>
 					)}
 				</div>
 			</div>
