@@ -36,7 +36,7 @@ class Joke extends Component {
 			faceClass = "Joke-face far fa-grin-squint-tears"
 		}
 		return (
-			<li className='Joke'>
+			<article className='Joke'>
 				<div className='Joke-rating'>
 					<button className='Joke-btn fas fa-arrow-up' onClick={this.handleUpvote}></button>
 					<p className="Joke-score" style={scoreBorder}>{rating}</p>
@@ -44,7 +44,7 @@ class Joke extends Component {
 				</div>
 				<div className="Joke-text"><p>{text}</p></div>
 				<div className={faceClass}></div>
-			</li>
+			</article>
 		);
 	}
 }
